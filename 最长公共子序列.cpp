@@ -9,6 +9,7 @@ private:
         }
     }
 public:
+    //最长子序列类问题，按照是否需要按顺序连续，其解决方法(dp方法)也可以分为局部(子序列结尾元素)，整体(子序列长度)两种。
     int longestCommonSubsequence(string text1, string text2) {
          //naive解法，O(n^4)直接超时
          //仿照上一题,dp[i][j]:A中以i为结尾，B中以j为结尾的最长公共子序列
