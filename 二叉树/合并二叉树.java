@@ -25,7 +25,7 @@ class Solution {
         else if (root1 == null && root2 == null){
             return root1;
         }
-        
+        // 先序遍历
         // 以root1为基准,在其上做修改
         root1.val += root2.val;
         root1.left = traversal(root1.left,root2.left);
