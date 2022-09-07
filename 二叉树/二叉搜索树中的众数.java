@@ -55,3 +55,42 @@ class Solution {
         return result.stream().mapToInt(Integer::intValue).toArray();
     }
 }
+
+
+import static java.lang.System.out;
+class Solution {
+    // 二叉树上原地进行频率计算
+    List<Integer> result = new ArrayList<>();
+    TreeNode prev;
+    int f = 0; // 当前频率
+    int max_f = 0; // 最大频率
+    private void traversal(TreeNode root){
+        if (root == null){
+            return;
+        }
+        traversal(root.left);
+        if (prev != null){
+            if (root.val == prev.val){
+                f++;
+            }
+            else{
+                f = 0;
+            }
+        }
+        if (f > max_f){
+            result.removeAll(result);
+            result.add(root.val);
+            max_f = f;
+        }
+        else if (f == max_f){
+            result.add(root.val);
+        }
+        prev = root;
+        traversal(root.right);
+        return;
+    }
+    public int[] findMode(TreeNode root) {
+        traversal(root);
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
