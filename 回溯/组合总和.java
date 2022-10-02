@@ -1,31 +1,51 @@
-import static java.lang.System.out;
 class Solution {
-    List<List<Integer>> result = new ArrayList<>();
-    List<Integer> path = new ArrayList<>();
+    private List<List<Integer>> result = new ArrayList<>();
+    // 未剪枝版本
+    // private void backtracking(int[] candidates,int target,List<Integer> path,int sum,int startIndex){
+    //     if (sum == target){
+    //         result.add(new ArrayList<>(path));
+    //         return;
+    //     }
+    //     if (sum > target){
+    //         return;
+    //     }
+    //     for (int i = startIndex ; i < candidates.length ; i++){
+    //         path.add(candidates[i]);
+    //         sum += candidates[i];
+    //         backtracking(candidates,target,path,sum,i);
+    //         path.remove(path.size()-1);
+    //         sum -= candidates[i];
+    //     }
+    //     return;
+    // }
+    // public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    //     List<Integer> path = new ArrayList<>();
+    //     backtracking(candidates,target,path,0,0);
+    //     return result;
+    // }
 
-    private void backtracking(int k , int n , int startIndex ,int sum){
-        if (path.size() == k){
-            if (sum == n){
-                result.add(new ArrayList(path));
-                return;
-            }
-            else{
-               return; 
-            }
+    // 剪枝版本
+    private void backtracking(int[] candidates,int target,List<Integer> path,int sum,int startIndex){
+        if (sum == target){
+            result.add(new ArrayList<>(path));
+            return;
         }
-        // 从所需元素的个数上和sum上进行双重剪枝
-        for (int i = startIndex; i <= 10 + path.size() - k && sum < n; i++){
-            //out.println(path);
-            path.add(i);
-            sum += i;
-            backtracking(k,n,i+1,sum);
+        if (sum > target){
+            return;
+        }
+        for (int i = startIndex ; i < candidates.length && sum + candidates[i] <= target ; i++){
+            path.add(candidates[i]);
+            sum += candidates[i];
+            backtracking(candidates,target,path,sum,i);
             path.remove(path.size()-1);
-            sum -= i;
+            sum -= candidates[i];
         }
         return;
     }
-    public List<List<Integer>> combinationSum3(int k, int n) {
-        backtracking(k,n,1,0);
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<Integer> path = new ArrayList<>();
+        backtracking(candidates,target,path,0,0);
         return result;
     }
 }
